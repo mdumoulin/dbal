@@ -3,6 +3,7 @@
 namespace Doctrine\DBAL\Cache;
 
 use ArrayIterator;
+use Doctrine\DBAL\Driver\Exception;
 use Doctrine\DBAL\Driver\FetchUtils;
 use Doctrine\DBAL\Driver\ResultStatement;
 use Doctrine\DBAL\FetchMode;
@@ -10,6 +11,7 @@ use InvalidArgumentException;
 use IteratorAggregate;
 use PDO;
 
+use Traversable;
 use function array_merge;
 use function array_values;
 use function count;
@@ -236,6 +238,30 @@ class ArrayStatement implements IteratorAggregate, ResultStatement
     public function fetchFirstColumn(): array
     {
         return FetchUtils::fetchFirstColumn($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateNumeric(): Traversable
+    {
+        return FetchUtils::iterateNumeric($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateAssociative(): Traversable
+    {
+        return FetchUtils::iterateAssociative($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateColumn(): Traversable
+    {
+        return FetchUtils::iterateColumn($this);
     }
 
     public function free(): void

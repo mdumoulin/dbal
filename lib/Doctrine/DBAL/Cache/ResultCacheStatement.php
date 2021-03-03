@@ -12,6 +12,7 @@ use Doctrine\DBAL\FetchMode;
 use InvalidArgumentException;
 use IteratorAggregate;
 use PDO;
+use Traversable;
 
 use function array_map;
 use function array_merge;
@@ -235,11 +236,7 @@ class ResultCacheStatement implements IteratorAggregate, ResultStatement
      */
     public function fetchAllNumeric(): array
     {
-        if ($this->statement instanceof Result) {
-            $data = $this->statement->fetchAllAssociative();
-        } else {
-            $data = $this->statement->fetchAll(FetchMode::ASSOCIATIVE);
-        }
+        $data = $this->statement->fetchAllAssociative();
 
         $this->data = $data;
 
@@ -253,11 +250,7 @@ class ResultCacheStatement implements IteratorAggregate, ResultStatement
      */
     public function fetchAllAssociative(): array
     {
-        if ($this->statement instanceof Result) {
-            $data = $this->statement->fetchAllAssociative();
-        } else {
-            $data = $this->statement->fetchAll(FetchMode::ASSOCIATIVE);
-        }
+        $data = $this->statement->fetchAllAssociative();
 
         $this->data = $data;
 
@@ -288,6 +281,30 @@ class ResultCacheStatement implements IteratorAggregate, ResultStatement
     public function fetchFirstColumn(): array
     {
         return FetchUtils::fetchFirstColumn($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateNumeric(): Traversable
+    {
+        return FetchUtils::iterateNumeric($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateAssociative(): Traversable
+    {
+        return FetchUtils::iterateAssociative($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateColumn(): Traversable
+    {
+        return FetchUtils::iterateColumn($this);
     }
 
     /**
@@ -324,11 +341,7 @@ class ResultCacheStatement implements IteratorAggregate, ResultStatement
             $this->data = [];
         }
 
-        if ($this->statement instanceof Result) {
-            $row = $this->statement->fetchAssociative();
-        } else {
-            $row = $this->statement->fetch(FetchMode::ASSOCIATIVE);
-        }
+        $row = $this->statement->fetchAssociative();
 
         if ($row !== false) {
             $this->data[] = $row;

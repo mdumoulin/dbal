@@ -8,6 +8,7 @@ use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
 use PDO;
 use PDOException;
+use Traversable;
 
 use function array_slice;
 use function assert;
@@ -214,6 +215,30 @@ class PDOStatement extends \PDOStatement implements StatementInterface
     public function fetchFirstColumn(): array
     {
         return $this->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateNumeric(): Traversable
+    {
+        return FetchUtils::iterateNumeric($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateAssociative(): Traversable
+    {
+        return FetchUtils::iterateAssociative($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateColumn(): Traversable
+    {
+        return FetchUtils::iterateColumn($this);
     }
 
     public function free(): void

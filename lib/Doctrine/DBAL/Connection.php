@@ -4,7 +4,6 @@ namespace Doctrine\DBAL;
 
 use Closure;
 use Doctrine\Common\EventManager;
-use Doctrine\DBAL\Abstraction\Result;
 use Doctrine\DBAL\Cache\ArrayStatement;
 use Doctrine\DBAL\Cache\CacheException;
 use Doctrine\DBAL\Cache\QueryCacheProfile;
@@ -618,11 +617,7 @@ class Connection implements DriverConnection
         try {
             $stmt = $this->executeQuery($query, $params, $types);
 
-            if ($stmt instanceof Result) {
-                return $stmt->fetchAssociative();
-            }
-
-            return $stmt->fetch(FetchMode::ASSOCIATIVE);
+            return $stmt->fetchAssociative();
         } catch (Throwable $e) {
             $this->handleExceptionDuringQuery($e, $query, $params, $types);
         }
@@ -645,11 +640,7 @@ class Connection implements DriverConnection
         try {
             $stmt = $this->executeQuery($query, $params, $types);
 
-            if ($stmt instanceof Result) {
-                return $stmt->fetchNumeric();
-            }
-
-            return $stmt->fetch(FetchMode::NUMERIC);
+            return $stmt->fetchNumeric();
         } catch (Throwable $e) {
             $this->handleExceptionDuringQuery($e, $query, $params, $types);
         }
@@ -672,11 +663,7 @@ class Connection implements DriverConnection
         try {
             $stmt = $this->executeQuery($query, $params, $types);
 
-            if ($stmt instanceof Result) {
-                return $stmt->fetchOne();
-            }
-
-            return $stmt->fetch(FetchMode::COLUMN);
+            return $stmt->fetchOne();
         } catch (Throwable $e) {
             $this->handleExceptionDuringQuery($e, $query, $params, $types);
         }
@@ -958,11 +945,7 @@ class Connection implements DriverConnection
         try {
             $stmt = $this->executeQuery($query, $params, $types);
 
-            if ($stmt instanceof Result) {
-                return $stmt->fetchAllNumeric();
-            }
-
-            return $stmt->fetchAll(FetchMode::NUMERIC);
+            return $stmt->fetchAllNumeric();
         } catch (Throwable $e) {
             $this->handleExceptionDuringQuery($e, $query, $params, $types);
         }
@@ -984,11 +967,7 @@ class Connection implements DriverConnection
         try {
             $stmt = $this->executeQuery($query, $params, $types);
 
-            if ($stmt instanceof Result) {
-                return $stmt->fetchAllAssociative();
-            }
-
-            return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+            return $stmt->fetchAllAssociative();
         } catch (Throwable $e) {
             $this->handleExceptionDuringQuery($e, $query, $params, $types);
         }
@@ -1063,11 +1042,7 @@ class Connection implements DriverConnection
         try {
             $stmt = $this->executeQuery($query, $params, $types);
 
-            if ($stmt instanceof Result) {
-                return $stmt->fetchFirstColumn();
-            }
-
-            return $stmt->fetchAll(FetchMode::COLUMN);
+            return $stmt->fetchFirstColumn();
         } catch (Throwable $e) {
             $this->handleExceptionDuringQuery($e, $query, $params, $types);
         }
@@ -1089,13 +1064,7 @@ class Connection implements DriverConnection
         try {
             $stmt = $this->executeQuery($query, $params, $types);
 
-            if ($stmt instanceof Result) {
-                yield from $stmt->iterateNumeric();
-            } else {
-                while (($row = $stmt->fetch(FetchMode::NUMERIC)) !== false) {
-                    yield $row;
-                }
-            }
+            yield from $stmt->iterateNumeric();
         } catch (Throwable $e) {
             $this->handleExceptionDuringQuery($e, $query, $params, $types);
         }
@@ -1118,13 +1087,7 @@ class Connection implements DriverConnection
         try {
             $stmt = $this->executeQuery($query, $params, $types);
 
-            if ($stmt instanceof Result) {
-                yield from $stmt->iterateAssociative();
-            } else {
-                while (($row = $stmt->fetch(FetchMode::ASSOCIATIVE)) !== false) {
-                    yield $row;
-                }
-            }
+            yield from $stmt->iterateAssociative();
         } catch (Throwable $e) {
             $this->handleExceptionDuringQuery($e, $query, $params, $types);
         }
@@ -1191,13 +1154,7 @@ class Connection implements DriverConnection
         try {
             $stmt = $this->executeQuery($query, $params, $types);
 
-            if ($stmt instanceof Result) {
-                yield from $stmt->iterateColumn();
-            } else {
-                while (($value = $stmt->fetch(FetchMode::COLUMN)) !== false) {
-                    yield $value;
-                }
-            }
+            yield from $stmt->iterateColumn();
         } catch (Throwable $e) {
             $this->handleExceptionDuringQuery($e, $query, $params, $types);
         }

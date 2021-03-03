@@ -16,6 +16,7 @@ use IteratorAggregate;
 use mysqli;
 use mysqli_stmt;
 use PDO;
+use Traversable;
 
 use function array_combine;
 use function array_fill;
@@ -501,6 +502,30 @@ class MysqliStatement implements IteratorAggregate, StatementInterface
     public function fetchFirstColumn(): array
     {
         return FetchUtils::fetchFirstColumn($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateNumeric(): Traversable
+    {
+        return FetchUtils::iterateNumeric($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateAssociative(): Traversable
+    {
+        return FetchUtils::iterateAssociative($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateColumn(): Traversable
+    {
+        return FetchUtils::iterateColumn($this);
     }
 
     /**

@@ -66,4 +66,64 @@ class FetchUtilsTest extends TestCase
             FetchUtils::fetchAllKeyValue($this->result)
         );
     }
+
+    public function testIterateNumeric(): void
+    {
+        $this->assertSame(
+            [
+                [
+                    0 => 'row1col1value',
+                    1 => 'row1col2value',
+                    2 => 'row1col3value',
+                ],
+                [
+                    0 => 'row2col1value',
+                    1 => 'row2col2value',
+                    2 => 'row2col3value',
+                ],
+                [
+                    0 => 'row3col1value',
+                    1 => 'row3col2value',
+                    2 => 'row3col3value',
+                ],
+            ],
+            iterator_to_array(FetchUtils::iterateNumeric($this->result))
+        );
+    }
+
+    public function testIterateAssociative(): void
+    {
+        $this->assertSame(
+            [
+                [
+                    'row1col1' => 'row1col1value',
+                    'row1col2' => 'row1col2value',
+                    'row1col3' => 'row1col3value',
+                ],
+                [
+                    'row2col1' => 'row2col1value',
+                    'row2col2' => 'row2col2value',
+                    'row2col3' => 'row2col3value',
+                ],
+                [
+                    'row3col1' => 'row3col1value',
+                    'row3col2' => 'row3col2value',
+                    'row3col3' => 'row3col3value',
+                ],
+            ],
+            iterator_to_array(FetchUtils::iterateAssociative($this->result))
+        );
+    }
+
+    public function testIterateColumn(): void
+    {
+        $this->assertSame(
+            [
+                'row1col1value',
+                'row2col1value',
+                'row3col1value',
+            ],
+            iterator_to_array(FetchUtils::iterateColumn($this->result))
+        );
+    }
 }

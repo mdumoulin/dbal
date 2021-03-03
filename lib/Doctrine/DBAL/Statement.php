@@ -4,6 +4,7 @@ namespace Doctrine\DBAL;
 
 use Doctrine\DBAL\Driver\Exception;
 use Doctrine\DBAL\Driver\FetchUtils;
+use Doctrine\DBAL\Driver\Result as DriverResult;
 use Doctrine\DBAL\Driver\Statement as DriverStatement;
 use Doctrine\DBAL\Exception\NoKeyValue;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
@@ -300,11 +301,7 @@ class Statement implements IteratorAggregate, DriverStatement
     public function fetchNumeric()
     {
         try {
-            if ($this->stmt instanceof Result) {
-                return $this->stmt->fetchNumeric();
-            }
-
-            return $this->stmt->fetch(FetchMode::NUMERIC);
+            return $this->stmt->fetchNumeric();
         } catch (Exception $e) {
             $this->conn->handleDriverException($e);
         }
@@ -318,11 +315,7 @@ class Statement implements IteratorAggregate, DriverStatement
     public function fetchAssociative()
     {
         try {
-            if ($this->stmt instanceof Result) {
-                return $this->stmt->fetchAssociative();
-            }
-
-            return $this->stmt->fetch(FetchMode::ASSOCIATIVE);
+            return $this->stmt->fetchAssociative();
         } catch (Exception $e) {
             $this->conn->handleDriverException($e);
         }
@@ -336,11 +329,7 @@ class Statement implements IteratorAggregate, DriverStatement
     public function fetchOne()
     {
         try {
-            if ($this->stmt instanceof Result) {
-                return $this->stmt->fetchOne();
-            }
-
-            return $this->stmt->fetch(FetchMode::COLUMN);
+            return $this->stmt->fetchOne();
         } catch (Exception $e) {
             $this->conn->handleDriverException($e);
         }
@@ -354,11 +343,7 @@ class Statement implements IteratorAggregate, DriverStatement
     public function fetchAllNumeric(): array
     {
         try {
-            if ($this->stmt instanceof Result) {
-                return $this->stmt->fetchAllNumeric();
-            }
-
-            return $this->stmt->fetchAll(FetchMode::NUMERIC);
+            return $this->stmt->fetchAllNumeric();
         } catch (Exception $e) {
             $this->conn->handleDriverException($e);
         }
@@ -372,11 +357,7 @@ class Statement implements IteratorAggregate, DriverStatement
     public function fetchAllAssociative(): array
     {
         try {
-            if ($this->stmt instanceof Result) {
-                return $this->stmt->fetchAllAssociative();
-            }
-
-            return $this->stmt->fetchAll(FetchMode::ASSOCIATIVE);
+            return $this->stmt->fetchAllAssociative();
         } catch (Exception $e) {
             $this->conn->handleDriverException($e);
         }
@@ -417,11 +398,7 @@ class Statement implements IteratorAggregate, DriverStatement
     public function fetchFirstColumn(): array
     {
         try {
-            if ($this->stmt instanceof Result) {
-                return $this->stmt->fetchFirstColumn();
-            }
-
-            return $this->stmt->fetchAll(FetchMode::COLUMN);
+            return $this->stmt->fetchFirstColumn();
         } catch (Exception $e) {
             $this->conn->handleDriverException($e);
         }
@@ -437,15 +414,7 @@ class Statement implements IteratorAggregate, DriverStatement
     public function iterateNumeric(): Traversable
     {
         try {
-            if ($this->stmt instanceof Result) {
-                while (($row = $this->stmt->fetchNumeric()) !== false) {
-                    yield $row;
-                }
-            } else {
-                while (($row = $this->stmt->fetch(FetchMode::NUMERIC)) !== false) {
-                    yield $row;
-                }
-            }
+            return FetchUtils::iterateNumeric($this->stmt);
         } catch (Exception $e) {
             $this->conn->handleDriverException($e);
         }
@@ -461,15 +430,7 @@ class Statement implements IteratorAggregate, DriverStatement
     public function iterateAssociative(): Traversable
     {
         try {
-            if ($this->stmt instanceof Result) {
-                while (($row = $this->stmt->fetchAssociative()) !== false) {
-                    yield $row;
-                }
-            } else {
-                while (($row = $this->stmt->fetch(FetchMode::ASSOCIATIVE)) !== false) {
-                    yield $row;
-                }
-            }
+            return FetchUtils::iterateAssociative($this->stmt);
         } catch (Exception $e) {
             $this->conn->handleDriverException($e);
         }
@@ -519,15 +480,7 @@ class Statement implements IteratorAggregate, DriverStatement
     public function iterateColumn(): Traversable
     {
         try {
-            if ($this->stmt instanceof Result) {
-                while (($value = $this->stmt->fetchOne()) !== false) {
-                    yield $value;
-                }
-            } else {
-                while (($value = $this->stmt->fetch(FetchMode::COLUMN)) !== false) {
-                    yield $value;
-                }
-            }
+            return FetchUtils::iterateColumn($this->stmt);
         } catch (Exception $e) {
             $this->conn->handleDriverException($e);
         }
@@ -545,7 +498,7 @@ class Statement implements IteratorAggregate, DriverStatement
 
     public function free(): void
     {
-        if ($this->stmt instanceof Result) {
+        if ($this->stmt instanceof DriverResult) {
             $this->stmt->free();
 
             return;

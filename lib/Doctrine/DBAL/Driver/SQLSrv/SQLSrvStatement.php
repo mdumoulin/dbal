@@ -10,6 +10,7 @@ use Doctrine\DBAL\FetchMode;
 use Doctrine\DBAL\ParameterType;
 use IteratorAggregate;
 use PDO;
+use Traversable;
 
 use function array_key_exists;
 use function count;
@@ -505,6 +506,30 @@ class SQLSrvStatement implements IteratorAggregate, StatementInterface
     public function fetchFirstColumn(): array
     {
         return FetchUtils::fetchFirstColumn($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateNumeric(): Traversable
+    {
+        return FetchUtils::iterateNumeric($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateAssociative(): Traversable
+    {
+        return FetchUtils::iterateAssociative($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateColumn(): Traversable
+    {
+        return FetchUtils::iterateColumn($this);
     }
 
     /**

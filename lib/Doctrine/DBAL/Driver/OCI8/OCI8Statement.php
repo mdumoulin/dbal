@@ -12,6 +12,7 @@ use Doctrine\DBAL\ParameterType;
 use InvalidArgumentException;
 use IteratorAggregate;
 use PDO;
+use Traversable;
 
 use function array_key_exists;
 use function assert;
@@ -616,6 +617,30 @@ class OCI8Statement implements IteratorAggregate, StatementInterface
     public function fetchFirstColumn(): array
     {
         return $this->doFetchAll(OCI_NUM, OCI_FETCHSTATEMENT_BY_COLUMN)[0];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateNumeric(): Traversable
+    {
+        return FetchUtils::iterateNumeric($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateAssociative(): Traversable
+    {
+        return FetchUtils::iterateAssociative($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateColumn(): Traversable
+    {
+        return FetchUtils::iterateColumn($this);
     }
 
     public function free(): void

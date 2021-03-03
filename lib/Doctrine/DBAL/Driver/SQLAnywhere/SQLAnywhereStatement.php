@@ -13,6 +13,7 @@ use PDO;
 use ReflectionClass;
 use ReflectionObject;
 use stdClass;
+use Traversable;
 
 use function array_key_exists;
 use function assert;
@@ -402,6 +403,30 @@ class SQLAnywhereStatement implements IteratorAggregate, Statement
     public function fetchFirstColumn(): array
     {
         return FetchUtils::fetchFirstColumn($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateNumeric(): Traversable
+    {
+        return FetchUtils::iterateNumeric($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateAssociative(): Traversable
+    {
+        return FetchUtils::iterateAssociative($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateColumn(): Traversable
+    {
+        return FetchUtils::iterateColumn($this);
     }
 
     /**

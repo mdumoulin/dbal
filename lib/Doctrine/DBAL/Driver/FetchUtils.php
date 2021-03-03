@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Doctrine\DBAL\Driver;
 
 use Doctrine\DBAL\Exception\NoKeyValue;
+use Traversable;
 
 /**
  * @internal
@@ -110,6 +111,42 @@ final class FetchUtils
         }
 
         return $rows;
+    }
+
+    /**
+     * @return Traversable<int,array<int,mixed>>
+     *
+     * @throws Exception
+     */
+    public static function iterateNumeric(Result $result): Traversable
+    {
+        while (($row = $result->fetchNumeric()) !== false) {
+            yield $row;
+        }
+    }
+
+    /**
+     * @return Traversable<int,array<string,mixed>>
+     *
+     * @throws Exception
+     */
+    public static function iterateAssociative(Result $result): Traversable
+    {
+        while (($row = $result->fetchAssociative()) !== false) {
+            yield $row;
+        }
+    }
+
+    /**
+     * @return Traversable<int,mixed>
+     *
+     * @throws Exception
+     */
+    public static function iterateColumn(Result $result): Traversable
+    {
+        while (($value = $result->fetchOne()) !== false) {
+            yield $value;
+        }
     }
 
     private static function ensureHasKeyValue(Result $result): void

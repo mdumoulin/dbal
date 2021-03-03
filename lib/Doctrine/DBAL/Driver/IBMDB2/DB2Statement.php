@@ -17,6 +17,7 @@ use ReflectionClass;
 use ReflectionObject;
 use ReflectionProperty;
 use stdClass;
+use Traversable;
 
 use function array_change_key_case;
 use function assert;
@@ -448,6 +449,30 @@ class DB2Statement implements IteratorAggregate, StatementInterface
     public function fetchFirstColumn(): array
     {
         return FetchUtils::fetchFirstColumn($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateNumeric(): Traversable
+    {
+        return FetchUtils::iterateNumeric($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateAssociative(): Traversable
+    {
+        return FetchUtils::iterateAssociative($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function iterateColumn(): Traversable
+    {
+        return FetchUtils::iterateColumn($this);
     }
 
     /**
