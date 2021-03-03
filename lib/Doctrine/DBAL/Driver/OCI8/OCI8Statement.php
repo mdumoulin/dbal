@@ -598,6 +598,22 @@ class OCI8Statement implements IteratorAggregate, StatementInterface, Result
     /**
      * {@inheritdoc}
      */
+    public function fetchAllKeyValue(): array
+    {
+        return FetchUtils::fetchAllKeyValue($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchAllAssociativeIndexed(): array
+    {
+        return FetchUtils::fetchAllAssociativeIndexed($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function fetchFirstColumn(): array
     {
         return $this->doFetchAll(OCI_NUM, OCI_FETCHSTATEMENT_BY_COLUMN)[0];

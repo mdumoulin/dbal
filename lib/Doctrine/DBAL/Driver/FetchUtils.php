@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Doctrine\DBAL\Driver;
 
+use Doctrine\DBAL\Exception\NoKeyValue;
+
 /**
  * @internal
  */
@@ -56,6 +58,43 @@ final class FetchUtils
 
         return $rows;
     }
+    /**
+     * Returns an array containing the values of the first column of the result.
+     *
+     * @return array<mixed,mixed>
+     *
+     * @throws Exception
+     */
+    public static function fetchAllAssociativeIndexed(Result $result): array
+    {
+        $data = [];
+
+        foreach ($result->fetchAllAssociative() as $row) {
+            $data[array_shift($row)] = $row;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Returns an associative array with the keys mapped to the first column and the values being
+     * an associative array representing the rest of the columns and their values.
+     *
+     * @return array<mixed,array<string,mixed>>
+     *
+     * @throws Exception
+     */
+    public static function fetchAllKeyValue(Result $result): array
+    {
+        self::ensureHasKeyValue($result);
+        $data = [];
+
+        foreach ($result->fetchAllNumeric() as [$key, $value]) {
+            $data[$key] = $value;
+        }
+
+        return $data;
+    }
 
     /**
      * @return array<int,mixed>
@@ -71,5 +110,14 @@ final class FetchUtils
         }
 
         return $rows;
+    }
+
+    private static function ensureHasKeyValue(Result $result): void
+    {
+        $columnCount = $result->columnCount();
+
+        if ($columnCount < 2) {
+            throw NoKeyValue::fromColumnCount($columnCount);
+        }
     }
 }

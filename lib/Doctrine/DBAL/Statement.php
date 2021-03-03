@@ -4,6 +4,7 @@ namespace Doctrine\DBAL;
 
 use Doctrine\DBAL\Abstraction\Result;
 use Doctrine\DBAL\Driver\Exception;
+use Doctrine\DBAL\Driver\FetchUtils;
 use Doctrine\DBAL\Driver\Statement as DriverStatement;
 use Doctrine\DBAL\Exception\NoKeyValue;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
@@ -393,15 +394,7 @@ class Statement implements IteratorAggregate, DriverStatement, Result
      */
     public function fetchAllKeyValue(): array
     {
-        $this->ensureHasKeyValue();
-
-        $data = [];
-
-        foreach ($this->fetchAllNumeric() as [$key, $value]) {
-            $data[$key] = $value;
-        }
-
-        return $data;
+        return FetchUtils::fetchAllKeyValue($this);
     }
 
     /**
@@ -414,13 +407,7 @@ class Statement implements IteratorAggregate, DriverStatement, Result
      */
     public function fetchAllAssociativeIndexed(): array
     {
-        $data = [];
-
-        foreach ($this->fetchAll(FetchMode::ASSOCIATIVE) as $row) {
-            $data[array_shift($row)] = $row;
-        }
-
-        return $data;
+        return FetchUtils::fetchAllAssociativeIndexed($this);
     }
 
     /**

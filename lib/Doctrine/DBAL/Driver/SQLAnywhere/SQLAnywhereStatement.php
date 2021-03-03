@@ -380,6 +380,22 @@ class SQLAnywhereStatement implements IteratorAggregate, Statement, Result
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function fetchAllKeyValue(): array
+    {
+        return FetchUtils::fetchAllKeyValue($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchAllAssociativeIndexed(): array
+    {
+        return FetchUtils::fetchAllAssociativeIndexed($this);
+    }
+
+    /**
      * @return array<int,mixed>
      *
      * @throws Exception

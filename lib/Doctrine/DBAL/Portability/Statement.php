@@ -2,6 +2,7 @@
 
 namespace Doctrine\DBAL\Portability;
 
+use Doctrine\DBAL\Driver\FetchUtils;
 use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\ResultStatement;
 use Doctrine\DBAL\Driver\Statement as DriverStatement;
@@ -259,6 +260,22 @@ class Statement implements IteratorAggregate, DriverStatement, Result
         }
 
         return $this->fixResultSet($data, true, true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchAllKeyValue(): array
+    {
+        return FetchUtils::fetchAllKeyValue($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchAllAssociativeIndexed(): array
+    {
+        return FetchUtils::fetchAllAssociativeIndexed($this);
     }
 
     /**

@@ -430,6 +430,22 @@ class DB2Statement implements IteratorAggregate, StatementInterface, Result
     /**
      * {@inheritdoc}
      */
+    public function fetchAllKeyValue(): array
+    {
+        return FetchUtils::fetchAllKeyValue($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchAllAssociativeIndexed(): array
+    {
+        return FetchUtils::fetchAllAssociativeIndexed($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function fetchFirstColumn(): array
     {
         return FetchUtils::fetchFirstColumn($this);

@@ -195,6 +195,22 @@ class PDOStatement extends \PDOStatement implements StatementInterface, Result
     /**
      * {@inheritdoc}
      */
+    public function fetchAllKeyValue(): array
+    {
+        return FetchUtils::fetchAllKeyValue($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetchAllAssociativeIndexed(): array
+    {
+        return FetchUtils::fetchAllAssociativeIndexed($this);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function fetchFirstColumn(): array
     {
         return $this->fetchAll(PDO::FETCH_COLUMN);

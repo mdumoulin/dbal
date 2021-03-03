@@ -57,6 +57,25 @@ interface Result
     /**
      * Returns an array containing the values of the first column of the result.
      *
+     * @return array<mixed,mixed>
+     *
+     * @throws Exception
+     */
+    public function fetchAllKeyValue(): array;
+
+    /**
+     * Returns an associative array with the keys mapped to the first column and the values being
+     * an associative array representing the rest of the columns and their values.
+     *
+     * @return array<mixed,array<string,mixed>>
+     *
+     * @throws Exception
+     */
+    public function fetchAllAssociativeIndexed(): array;
+
+    /**
+     * Returns an array containing the values of the first column of the result.
+     *
      * @return array<int,mixed>
      *
      * @throws Exception
