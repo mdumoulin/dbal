@@ -20,7 +20,7 @@ use function rtrim;
 /**
  * Portability wrapper for a Statement.
  */
-class Statement implements IteratorAggregate, DriverStatement, Result
+class Statement implements IteratorAggregate, DriverStatement
 {
     /** @var int */
     private $portability;

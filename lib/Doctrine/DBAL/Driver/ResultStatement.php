@@ -8,7 +8,7 @@ use Traversable;
 /**
  * Interface for the reading part of a prepare statement only.
  */
-interface ResultStatement extends Traversable
+interface ResultStatement extends Result, Traversable
 {
     /**
      * Closes the cursor, enabling the statement to be executed again.

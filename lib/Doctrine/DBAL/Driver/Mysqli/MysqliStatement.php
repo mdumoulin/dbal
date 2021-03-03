@@ -7,7 +7,6 @@ use Doctrine\DBAL\Driver\Mysqli\Exception\ConnectionError;
 use Doctrine\DBAL\Driver\Mysqli\Exception\FailedReadingStreamOffset;
 use Doctrine\DBAL\Driver\Mysqli\Exception\StatementError;
 use Doctrine\DBAL\Driver\Mysqli\Exception\UnknownType;
-use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\Statement as StatementInterface;
 use Doctrine\DBAL\Driver\StatementIterator;
 use Doctrine\DBAL\Exception\InvalidArgumentException;
@@ -34,7 +33,7 @@ use function str_repeat;
 /**
  * @deprecated Use {@link Statement} instead
  */
-class MysqliStatement implements IteratorAggregate, StatementInterface, Result
+class MysqliStatement implements IteratorAggregate, StatementInterface
 {
     /** @var string[] */
     protected static $_paramTypeMap = [

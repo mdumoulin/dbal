@@ -7,7 +7,6 @@ use Doctrine\DBAL\Driver\IBMDB2\Exception\CannotCopyStreamToStream;
 use Doctrine\DBAL\Driver\IBMDB2\Exception\CannotCreateTemporaryFile;
 use Doctrine\DBAL\Driver\IBMDB2\Exception\CannotWriteToTemporaryFile;
 use Doctrine\DBAL\Driver\IBMDB2\Exception\StatementError;
-use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\Statement as StatementInterface;
 use Doctrine\DBAL\Driver\StatementIterator;
 use Doctrine\DBAL\FetchMode;
@@ -59,7 +58,7 @@ use const DB2_PARAM_IN;
 /**
  * @deprecated Use {@link Statement} instead
  */
-class DB2Statement implements IteratorAggregate, StatementInterface, Result
+class DB2Statement implements IteratorAggregate, StatementInterface
 {
     /** @var resource */
     private $stmt;

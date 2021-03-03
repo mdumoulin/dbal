@@ -3,7 +3,6 @@
 namespace Doctrine\DBAL\Driver\SQLSrv;
 
 use Doctrine\DBAL\Driver\FetchUtils;
-use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\SQLSrv\Exception\Error;
 use Doctrine\DBAL\Driver\Statement as StatementInterface;
 use Doctrine\DBAL\Driver\StatementIterator;
@@ -46,7 +45,7 @@ use const SQLSRV_PARAM_IN;
  *
  * @deprecated Use {@link Statement} instead
  */
-class SQLSrvStatement implements IteratorAggregate, StatementInterface, Result
+class SQLSrvStatement implements IteratorAggregate, StatementInterface
 {
     /**
      * The SQLSRV Resource.

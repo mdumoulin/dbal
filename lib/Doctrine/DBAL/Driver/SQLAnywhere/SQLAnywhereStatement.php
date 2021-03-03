@@ -4,7 +4,6 @@ namespace Doctrine\DBAL\Driver\SQLAnywhere;
 
 use Doctrine\DBAL\Driver\Exception;
 use Doctrine\DBAL\Driver\FetchUtils;
-use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\StatementIterator;
 use Doctrine\DBAL\FetchMode;
@@ -45,7 +44,7 @@ use const SASQL_BOTH;
 /**
  * SAP SQL Anywhere implementation of the Statement interface.
  */
-class SQLAnywhereStatement implements IteratorAggregate, Statement, Result
+class SQLAnywhereStatement implements IteratorAggregate, Statement
 {
     /** @var resource The connection resource. */
     private $conn;

@@ -4,7 +4,6 @@ namespace Doctrine\DBAL\Cache;
 
 use ArrayIterator;
 use Doctrine\DBAL\Driver\FetchUtils;
-use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\ResultStatement;
 use Doctrine\DBAL\FetchMode;
 use InvalidArgumentException;
@@ -19,7 +18,7 @@ use function reset;
 /**
  * @deprecated
  */
-class ArrayStatement implements IteratorAggregate, ResultStatement, Result
+class ArrayStatement implements IteratorAggregate, ResultStatement
 {
     /** @var mixed[] */
     private $data;

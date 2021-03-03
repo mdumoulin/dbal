@@ -5,7 +5,6 @@ namespace Doctrine\DBAL\Driver\OCI8;
 use Doctrine\DBAL\Driver\FetchUtils;
 use Doctrine\DBAL\Driver\OCI8\Exception\NonTerminatedStringLiteral;
 use Doctrine\DBAL\Driver\OCI8\Exception\UnknownParameterIndex;
-use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\Statement as StatementInterface;
 use Doctrine\DBAL\Driver\StatementIterator;
 use Doctrine\DBAL\FetchMode;
@@ -54,7 +53,7 @@ use const SQLT_CHR;
  *
  * @deprecated Use {@link Statement} instead
  */
-class OCI8Statement implements IteratorAggregate, StatementInterface, Result
+class OCI8Statement implements IteratorAggregate, StatementInterface
 {
     /** @var resource */
     protected $_dbh;

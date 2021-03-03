@@ -24,7 +24,7 @@ use const E_USER_DEPRECATED;
  *
  * @deprecated Use {@link Statement} instead
  */
-class PDOStatement extends \PDOStatement implements StatementInterface, Result
+class PDOStatement extends \PDOStatement implements StatementInterface
 {
     use PDOStatementImplementations;
 

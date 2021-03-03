@@ -2,7 +2,6 @@
 
 namespace Doctrine\DBAL;
 
-use Doctrine\DBAL\Abstraction\Result;
 use Doctrine\DBAL\Driver\Exception;
 use Doctrine\DBAL\Driver\FetchUtils;
 use Doctrine\DBAL\Driver\Statement as DriverStatement;
@@ -23,7 +22,7 @@ use function is_string;
  * A thin wrapper around a Doctrine\DBAL\Driver\Statement that adds support
  * for logging, DBAL mapping types, etc.
  */
-class Statement implements IteratorAggregate, DriverStatement, Result
+class Statement implements IteratorAggregate, DriverStatement
 {
     /**
      * The SQL statement.

@@ -6,7 +6,6 @@ use ArrayIterator;
 use Doctrine\Common\Cache\Cache;
 use Doctrine\DBAL\Driver\Exception;
 use Doctrine\DBAL\Driver\FetchUtils;
-use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\ResultStatement;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\FetchMode;
@@ -35,7 +34,7 @@ use function reset;
  *
  * @deprecated
  */
-class ResultCacheStatement implements IteratorAggregate, ResultStatement, Result
+class ResultCacheStatement implements IteratorAggregate, ResultStatement
 {
     /** @var Cache */
     private $resultCache;
