@@ -498,13 +498,7 @@ class Statement implements IteratorAggregate, DriverStatement
 
     public function free(): void
     {
-        if ($this->stmt instanceof DriverResult) {
-            $this->stmt->free();
-
-            return;
-        }
-
-        $this->stmt->closeCursor();
+        $this->stmt->free();
     }
 
     /**

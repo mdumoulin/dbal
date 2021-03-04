@@ -3,7 +3,6 @@
 namespace Doctrine\DBAL\Portability;
 
 use Doctrine\DBAL\Driver\FetchUtils;
-use Doctrine\DBAL\Driver\Result;
 use Doctrine\DBAL\Driver\ResultStatement;
 use Doctrine\DBAL\Driver\Statement as DriverStatement;
 use Doctrine\DBAL\Driver\StatementIterator;
@@ -92,7 +91,7 @@ class Statement implements IteratorAggregate, DriverStatement
      */
     public function errorCode()
     {
-        assert($this->stmt instanceof DriverStatement);
+        assert($this->stmt instanceof Statement);
 
         return $this->stmt->errorCode();
     }
@@ -104,7 +103,7 @@ class Statement implements IteratorAggregate, DriverStatement
      */
     public function errorInfo()
     {
-        assert($this->stmt instanceof DriverStatement);
+        assert($this->stmt instanceof Statement);
 
         return $this->stmt->errorInfo();
     }
@@ -192,11 +191,7 @@ class Statement implements IteratorAggregate, DriverStatement
      */
     public function fetchNumeric()
     {
-        if ($this->stmt instanceof Result) {
-            $row = $this->stmt->fetchNumeric();
-        } else {
-            $row = $this->stmt->fetch(FetchMode::NUMERIC);
-        }
+        $row = $this->stmt->fetchNumeric();
 
         return $this->fixResult($row, false);
     }
@@ -206,11 +201,7 @@ class Statement implements IteratorAggregate, DriverStatement
      */
     public function fetchAssociative()
     {
-        if ($this->stmt instanceof Result) {
-            $row = $this->stmt->fetchAssociative();
-        } else {
-            $row = $this->stmt->fetch(FetchMode::ASSOCIATIVE);
-        }
+        $row = $this->stmt->fetchAssociative();
 
         return $this->fixResult($row, true);
     }
@@ -220,11 +211,7 @@ class Statement implements IteratorAggregate, DriverStatement
      */
     public function fetchOne()
     {
-        if ($this->stmt instanceof Result) {
-            $value = $this->stmt->fetchOne();
-        } else {
-            $value = $this->stmt->fetch(FetchMode::COLUMN);
-        }
+        $value = $this->stmt->fetchOne();
 
         if (($this->portability & Connection::PORTABILITY_EMPTY_TO_NULL) !== 0 && $value === '') {
             $value = null;
@@ -240,11 +227,7 @@ class Statement implements IteratorAggregate, DriverStatement
      */
     public function fetchAllNumeric(): array
     {
-        if ($this->stmt instanceof Result) {
-            $data = $this->stmt->fetchAllNumeric();
-        } else {
-            $data = $this->stmt->fetchAll(FetchMode::NUMERIC);
-        }
+        $data = $this->stmt->fetchAllNumeric();
 
         return $this->fixResultSet($data, false, true);
     }
@@ -254,11 +237,7 @@ class Statement implements IteratorAggregate, DriverStatement
      */
     public function fetchAllAssociative(): array
     {
-        if ($this->stmt instanceof Result) {
-            $data = $this->stmt->fetchAllAssociative();
-        } else {
-            $data = $this->stmt->fetchAll(FetchMode::ASSOCIATIVE);
-        }
+        $data = $this->stmt->fetchAllAssociative();
 
         return $this->fixResultSet($data, true, true);
     }
@@ -284,11 +263,7 @@ class Statement implements IteratorAggregate, DriverStatement
      */
     public function fetchFirstColumn(): array
     {
-        if ($this->stmt instanceof Result) {
-            $data = $this->stmt->fetchFirstColumn();
-        } else {
-            $data = $this->stmt->fetchAll(FetchMode::COLUMN);
-        }
+        $data = $this->stmt->fetchFirstColumn();
 
         return $this->fixResultSet($data, true, false);
     }
@@ -319,13 +294,7 @@ class Statement implements IteratorAggregate, DriverStatement
 
     public function free(): void
     {
-        if ($this->stmt instanceof Result) {
-            $this->stmt->free();
-
-            return;
-        }
-
-        $this->stmt->closeCursor();
+        $this->stmt->free();
     }
 
     /**

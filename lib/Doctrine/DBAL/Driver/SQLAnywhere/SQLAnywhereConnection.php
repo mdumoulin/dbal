@@ -131,11 +131,7 @@ class SQLAnywhereConnection implements Connection, ServerInfoAwareConnection
     {
         $stmt = $this->query("SELECT PROPERTY('ProductVersion')");
 
-        if ($stmt instanceof Result) {
-            $version = $stmt->fetchOne();
-        } else {
-            $version = $stmt->fetchColumn();
-        }
+        $version = $stmt->fetchOne();
 
         assert(is_string($version));
 
@@ -153,11 +149,7 @@ class SQLAnywhereConnection implements Connection, ServerInfoAwareConnection
 
         $stmt = $this->query('SELECT ' . $name . '.CURRVAL');
 
-        if ($stmt instanceof Result) {
-            return $stmt->fetchOne();
-        }
-
-        return $stmt->fetchColumn();
+        return $stmt->fetchOne();
     }
 
     /**
